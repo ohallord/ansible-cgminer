@@ -67,8 +67,10 @@ jobs:
           command: |
             . venv/bin/activate
             ansible-playbook create_host_file.yml --extra-vars "HOST_IP=$EC2_HOST_IP SSH_KEY_NAME=$SSH_KEY_NAME "
+            ssh-keyscan $EC2_HOST_IP >>  ~/.ssh/known_hosts
             pwd
             ls -lrt ~/repo/hosts
+            cat ~/.ssh/known_hosts
       - run:
           name: install and run the docker file on the host
           command: |
