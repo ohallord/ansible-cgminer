@@ -48,21 +48,26 @@ jobs:
     working_directory: ~/repo
     steps:
       - checkout
+      - setup_remote_docker
       - add_ssh_keys:
           fingerprints:
-             - "$SSH_FINGERPRINT"
+             - "87:5a:c7:c8:0e:14:01:c6:cf:9c:c5:02:e4:8b:77:88"
 #87:5a:c7:c8:0e:14:01:c6:cf:9c:c5:02:e4:8b:77:88
       - run:
           name: Check to see what the ssh file name is
           command: |
             echo "The Finger Print is $SSH_FINGERPRINT"
             ls -l ~/.ssh/*
+            - run:
+      - run:
+          name: Log into Docker
+          command:  docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
       - run:
           name: install and run the docker file on the host
           command:
              python -m virtualenv venv
              . venv/bin/activate
-             pip install -r requirements.txt
+             pip install setuptools docker ansible
              echo "Host Variables are POOL_URL=$POOL_URL MINER_USER=$MINER_USER  MINER_PASSWD=$MINER_PASSWD"
              ansible-playbook -i hosts deploy_docker.yml --extra-vars "POOL_URL=$POOL_URL MINER_USER=$MINER_USER  MINER_PASSWD=$MINER_PASSWD"
 
