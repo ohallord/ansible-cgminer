@@ -67,11 +67,13 @@ jobs:
           command:
             . venv/bin/activate
             ansible-playbook create_host_file.yml --extra-vars "HOST_IP=$EC2_HOST_IP SSH_KEY_NAME=$SSH_KEY_NAME "
+            pwd
+            ls -lrt ~/repo/hosts
       - run:
           name: install and run the docker file on the host
           command: |
              . venv/bin/activate
-             ansible-playbook -i hosts deploy_docker.yml --extra-vars "POOL_URL=$POOL_URL MINER_USER=$MINER_USER  MINER_PASSWD=$MINER_PASSWD"
+             ansible-playbook -i  ~/repo/hosts deploy_docker.yml --extra-vars "POOL_URL=$POOL_URL MINER_USER=$MINER_USER  MINER_PASSWD=$MINER_PASSWD"
 
 workflows:
   version: 2
