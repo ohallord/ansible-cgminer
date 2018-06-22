@@ -1,17 +1,14 @@
 ---
 - hosts: shapeshift
-  become: yes
-  become_user: root
-- name: nginx container
-  docker_container:
-    image: ohallord/cgminer
-    state: started
-    restart_policy: always
-    restart_policy_retry: 3
-    env:
-       POOL_URL: "{{ pool_url }}"
-       MINER_USER: "{{ miner_user }}"
-       MINER_PASSWD: "{{ miner_passwd }}"
-    tags:
-      - cgminer
+  tasks:
+  - name: deploy and run the docker container
+    docker_container:
+      name: cgminer
+      image: ohallord/cgminer
+      state: started
+      restart_policy: always
+      env:
+         POOL_URL: "{{ POOL_URL }}"
+         MINER_USER: "{{ MINER_USER }}"
+         MINER_PASSWD: "{{ MINER_PASSWD }}"
 
