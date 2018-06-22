@@ -40,8 +40,8 @@ jobs:
              . venv/bin/activate
              ansible-playbook create_host_file.yml --extra-vars "HOST_IP=$EC2_HOST_IP SSH_KEY_NAME=$SSH_KEY_NAME "
   deploy:
-    machine:
-      enabled: true
+#    machine:
+#      enabled: true
     docker:
        #- image: circleci/python:3.6.1
        - image: circleci/python:2.7-jessie
