@@ -38,18 +38,33 @@ jobs:
           name: create host file
           command:
              . venv/bin/activate
-             ansible-playbook create_host_file.yml --extra-vars "HOST_IP=$EC2_HOST_IP SSH_KEY_NAME=$SSH_KEY_NAME "  
-deploy-job:
+             ansible-playbook create_host_file.yml --extra-vars "HOST_IP=$EC2_HOST_IP SSH_KEY_NAME=$SSH_KEY_NAME "
+  deploy:
+    machine:
+      enabled: true
     steps:
+      - checkout
       - add_ssh_keys:
           fingerprints:
-            - $SSH_FINGERPRINT
+          - $SSH_FINGERPRINT
       - run:
           name: Check to see what the ssh file name is
           command: |
-             ls -l ~/.ssh/*
+            ls -l ~/.ssh/*
       - run:
           name: install and run the docker file on the host
           command:
-             . venv/bin/activate
-             ansible-playbook -i hosts deploy_docker.yml --extra-vars "POOL_URL=${POOL_URL} MINER_USER=${MINER_USER}  MINER_PASSWD=${MINER_PASSWD}"
+            . venv/bin/activate
+            ansible-playbook -i hosts deploy_docker.yml --extra-vars "POOL_URL=${POOL_URL} MINER_USER=${MINER_USER}  MINER_PASSWD=${MINER_PASSWD}"
+
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+    - build
+    - deploy:
+        requires:
+        - build
+        filters:
+          branches:
+            only: sequential-branch-filter
