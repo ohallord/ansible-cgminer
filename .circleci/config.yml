@@ -52,13 +52,11 @@ jobs:
       - add_ssh_keys:
           fingerprints:
              - "87:5a:c7:c8:0e:14:01:c6:cf:9c:c5:02:e4:8b:77:88"
-#87:5a:c7:c8:0e:14:01:c6:cf:9c:c5:02:e4:8b:77:88
       - run:
           name: Check to see what the ssh file name is
           command: |
             echo "The Finger Print is $SSH_FINGERPRINT"
             ls -l ~/.ssh/*
-            - run:
       - run:
           name: Log into Docker
           command:  docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
