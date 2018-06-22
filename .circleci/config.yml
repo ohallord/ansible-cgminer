@@ -54,8 +54,10 @@ jobs:
       - run:
           name: install and run the docker file on the host
           command:
-            . venv/bin/activate
-            ansible-playbook -i hosts deploy_docker.yml --extra-vars "POOL_URL=${POOL_URL} MINER_USER=${MINER_USER}  MINER_PASSWD=${MINER_PASSWD}"
+             python -m virtualenv venv
+             . venv/bin/activate
+             pip install -r requirements.txt
+             ansible-playbook -i hosts deploy_docker.yml --extra-vars "POOL_URL=${POOL_URL} MINER_USER=${MINER_USER}  MINER_PASSWD=${MINER_PASSWD}"
 
 workflows:
   version: 2
