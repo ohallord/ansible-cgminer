@@ -21,7 +21,7 @@ jobs:
           - v2-dependencies-
       - add_ssh_keys:
           fingerprints:
-            - "87:5a:c7:c8:0e:14:01:c6:cf:9c:c5:02:e4:8b:77:88"
+            - $SSH_FINGERPRINT
       - run:
           name: Check to see what the ssh file name is
           command: |
@@ -45,12 +45,12 @@ jobs:
           name: create host file
           command:
              . venv/bin/activate
-             ansible-playbook create_host_file.yml --extra-vars "HOST_IP=$EC2_HOST_IP" 
+             ansible-playbook create_host_file.yml --extra-vars "HOST_IP=$EC2_HOST_IP SSH_KEY_NAME=$SSH_KEY_NAME "  
 deploy-job:
     steps:
       - add_ssh_keys:
           fingerprints:
-            - "87:5a:c7:c8:0e:14:01:c6:cf:9c:c5:02:e4:8b:77:88"
+            - $SSH_FINGERPRINT
       - run:
           name: Check to see what the ssh file name is
           command: |

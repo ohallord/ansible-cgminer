@@ -2,6 +2,7 @@
 - hosts: localhost
   vars:
      HOST_IP: "{{ HOST_IP }}"
+     SSH_KEY_NAME: "{{ SSH_KEY_NAME }"
   tasks: 
   - name: Create Host File
     template:
