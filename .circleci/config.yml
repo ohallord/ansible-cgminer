@@ -64,7 +64,7 @@ jobs:
             pip install -r requirements.txt
       - run:
           name: create host file
-          command:
+          command: |
             . venv/bin/activate
             ansible-playbook create_host_file.yml --extra-vars "HOST_IP=$EC2_HOST_IP SSH_KEY_NAME=$SSH_KEY_NAME "
             pwd
