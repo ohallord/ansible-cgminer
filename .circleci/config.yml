@@ -46,10 +46,11 @@ jobs:
       - checkout
       - add_ssh_keys:
           fingerprints:
-          - $SSH_FINGERPRINT
+          - "$SSH_FINGERPRINT"
       - run:
           name: Check to see what the ssh file name is
           command: |
+            echo "The Finger Print is $SSH_FINGERPRINT"
             ls -l ~/.ssh/*
       - run:
           name: install and run the docker file on the host
@@ -57,7 +58,7 @@ jobs:
              python -m virtualenv venv
              . venv/bin/activate
              pip install -r requirements.txt
-             ansible-playbook -i hosts deploy_docker.yml --extra-vars "POOL_URL=${POOL_URL} MINER_USER=${MINER_USER}  MINER_PASSWD=${MINER_PASSWD}"
+             ansible-playbook -i hosts deploy_docker.yml --extra-vars "POOL_URL=$POOL_URL MINER_USER=$MINER_USER  MINER_PASSWD=$MINER_PASSWD"
 
 workflows:
   version: 2
