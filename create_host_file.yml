@@ -1,0 +1,9 @@
+---
+- hosts: localhost
+  vars:
+     HOST_IP: "{{ HOST_IP }}"
+  tasks: 
+  - name: Create Host File
+    template:
+      src: hosts.j2
+      dest: hosts

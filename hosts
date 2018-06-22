@@ -1,8 +1,0 @@
-# This is the default ansible 'hosts' file.
-
-#db-[99:101]-node.example.com
-
-#Docker Server (AWS)
-[shapeshift]
-54.210.144.73 ansible_connection=ssh        ansible_user=ubuntu ansible_ssh_private_key_file=/home/dan/.ssh/shapeshift.pem
-
