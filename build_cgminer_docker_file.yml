@@ -1,0 +1,9 @@
+---
+- hosts: localhost
+  tasks:
+  - name: Build an image and push it to a private repo
+    docker_image:
+     path: ./cgminer_docker
+     name: ohallord/cgminer
+     tag: latest
+     push: yes

@@ -1,0 +1,52 @@
+# demo_setup.yml
+
+- hosts: localhost
+  connection: local
+  gather_facts: False
+  vars:
+     name: shapeshift
+     vpc_id: vpc-e0cbf09b
+     aws_profile: default
+     region: us-east-1
+  tasks:
+    - name: Create Security Group
+      ec2_group:
+         name: "sec_grp_{{ name }}"
+         description: sg with rule descriptions
+         vpc_id: "{{ vpc_id  }}"
+         profile: "{{ aws_profile }}"
+         region: "{{ region }}"
+         rules:
+           - proto: tcp
+             from_port: 22
+             to_port: 22
+             cidr_ip: 174.16.248.29/32
+#             rule_desc: allow my ip on port 22
+      register: ec2_group
+#    - roles: "{{ playbook_dir }}\roles"
+    - name: Provision a set of instances
+      ec2:
+         key_name: shapeshift
+         instance_type: t2.micro
+         image:  ami-a4dc46db
+         region: us-east-1
+#         state: present
+         vpc_subnet_id: subnet-e04f8cce
+         group_id: "{{ ec2_group.group_id }}"
+         assign_public_ip: yes
+         wait: true
+         exact_count: 1
+         count_tag:
+            Name: shapeshift_host
+         instance_tags:
+            Name: shapeshift
+      register: ec2
+      tags: ec2
+    - name: Wait for SSH to come up
+      wait_for:
+        host: "{{ item.public_dns_name }}"
+        port: 22
+        delay: 60
+        timeout: 600
+        state: present
+      with_items: "{{ ec2.instances }}"
