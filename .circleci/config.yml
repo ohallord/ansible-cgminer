@@ -42,11 +42,16 @@ jobs:
   deploy:
     machine:
       enabled: true
+    docker:
+       #- image: circleci/python:3.6.1
+       - image: circleci/python:2.7-jessie
+    working_directory: ~/repo
     steps:
       - checkout
       - add_ssh_keys:
           fingerprints:
-          - "$SSH_FINGERPRINT"
+             - "$SSH_FINGERPRINT"
+#87:5a:c7:c8:0e:14:01:c6:cf:9c:c5:02:e4:8b:77:88
       - run:
           name: Check to see what the ssh file name is
           command: |
@@ -58,6 +63,7 @@ jobs:
              python -m virtualenv venv
              . venv/bin/activate
              pip install -r requirements.txt
+             echo "Host Variables are "POOL_URL=$POOL_URL MINER_USER=$MINER_USER  MINER_PASSWD=$MINER_PASSWD"
              ansible-playbook -i hosts deploy_docker.yml --extra-vars "POOL_URL=$POOL_URL MINER_USER=$MINER_USER  MINER_PASSWD=$MINER_PASSWD"
 
 workflows:
