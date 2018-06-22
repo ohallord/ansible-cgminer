@@ -6,8 +6,8 @@ jobs:
 #
   build:
     docker:
-      - image: circleci/python:3.6.1
-      #- image: circleci/python:2.7-jessie
+      #- image: circleci/python:3.6.1
+      - image: circleci/python:2.7-jessie
     working_directory: ~/repo
 
     steps:
@@ -25,12 +25,11 @@ jobs:
       - run:
           name: install dependencies
           command: |
-            python3 -m venv venv
-            #python -m virtualenv venv
+            #python3 -m venv venv
+            python -m virtualenv venv
             . venv/bin/activate
             pip install -r requirements.txt
-            ansible-container --var-file cgminer_vars.yml build  --roles-path  ${CIRCLE_WORKING_DIRECTORY}/roles/cgminer/ --use-local-python
-            sudo ansible-container --var-file cgminer_vars.yml push --push-to dockerhub
+            ansible-playbook build_cgminer_docker_file.yml
       - run:
           name: Build Docker Container
           command:
