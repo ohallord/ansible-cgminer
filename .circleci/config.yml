@@ -42,7 +42,7 @@ jobs:
       - run:
           name: Check to see what the ssh file name is
           command: |
-             ls -l ~/.ssh/*
+             ls -l ~/.ssh/config/*
       - run:
           name: install and run the docker file on the host
           command:
