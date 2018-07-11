@@ -1,5 +1,4 @@
 setuptools
 docker
-docker-py
 ansible
 
