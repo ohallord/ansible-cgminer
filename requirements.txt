@@ -1,5 +1,5 @@
 setuptools
+requests>2.11.0
 docker>=2.7.0
-requests
 ansible>=2.4
 
