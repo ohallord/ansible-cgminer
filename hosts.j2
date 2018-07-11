@@ -1,5 +1,8 @@
 #Host file for the EC2 host for use with ansible deployments
 
+#Local hosts
+[localhost]
+127.0.0.1  ansible_connection=local
 
 #Docker Server (AWS)
 [shapeshift]
