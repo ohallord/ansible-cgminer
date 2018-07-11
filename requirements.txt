@@ -1,4 +1,4 @@
 setuptools
-docker
-ansible
+docker>=2.0.0
+ansible>=2.4
 
