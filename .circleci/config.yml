@@ -28,11 +28,9 @@ jobs:
             python -m virtualenv venv
             . venv/bin/activate
             pip install -r requirements.txt
-            pip install docker-py
             pip show docker-py
             pip show requests
-            docker --version
-            ansible --version
+            pip show ansible
             ansible-playbook -i ~/repo/localhosts build_cgminer_docker_file.yml
       #- run:
       #    name: Build And Push CGMiner Docker image
