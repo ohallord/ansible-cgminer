@@ -6,8 +6,8 @@ jobs:
 #
   build:
     docker:
-      #- image: circleci/python:3.6.1
-      - image: circleci/python:2.7-jessie
+      - image: circleci/python:3.6.1
+      #- image: circleci/python:2.7-jessie
     working_directory: ~/repo
 
     steps:
@@ -25,7 +25,8 @@ jobs:
       - run:
           name: install dependencies
           command: |
-            python -m virtualenv venv
+            #python -m virtualenv venv
+            python3 -m venv venv
             . venv/bin/activate
             pip install -r requirements.txt
             pip show docker-py
