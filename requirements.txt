@@ -1,5 +1,4 @@
 setuptools
-ansible==2.4.2.0
-docker-py
-docker-compose
+ansible
+docker
 
