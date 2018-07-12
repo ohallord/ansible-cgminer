@@ -1,5 +1,5 @@
 setuptools
-requests==2.18.4
-docker-py==1.10.6
-ansible>=2.6.1
+docker-py
+docker-compose
+ansible
 
