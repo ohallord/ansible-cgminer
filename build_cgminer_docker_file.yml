@@ -1,5 +1,7 @@
 ---
 - hosts: localhost
+  environment:
+    PYTHONPATH: "{{ lookup('env','PYTHONPATH') }}:~/repo/venv/lib/python2.7/dist-packages:~/repo/venv/lib/python2.7/site-packages"
   tasks:
   - name: Build an image and push it to a private repo
     docker_image:
