@@ -13,12 +13,9 @@ jobs:
     working_directory: ~/repo
 
     steps:
-      #- run : 
-      #     docker run   --privileged=true  -d ohallord/python:2.7
       - checkout
       - setup_remote_docker
           docker_layer_caching: true 
-          image: ohallord/python:2.7
           
       # Download and cache dependencies
       - restore_cache:
