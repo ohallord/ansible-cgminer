@@ -5,6 +5,7 @@ jobs:
 # Check https://circleci.com/docs/2.0/language-python/ for more details
 #
   build:
+    #machine: true
     docker:
       #- image: circleci/python:3.6.1
       #- image: circleci/python:2.7-jessie
@@ -12,6 +13,8 @@ jobs:
     working_directory: ~/repo
 
     steps:
+      - run : 
+           docker run   --privileged=true  -d ohallord/python:2.7
       - checkout
       #- setup_remote_docker
       # Download and cache dependencies
@@ -23,8 +26,7 @@ jobs:
       - run: 
           name: Log into Docker
           command: |
-              docker ps
-              service docker start
+              #service docker start
               docker ps
               echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin 
       - run:
