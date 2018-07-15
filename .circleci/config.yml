@@ -22,7 +22,11 @@ jobs:
           - v2-dependencies-
       - run: 
           name: Log into Docker
-          command:  docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+          command: |
+              docker ps
+              service docker start
+              docker ps
+              echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin 
       - run:
           name: install dependencies
           command: |
