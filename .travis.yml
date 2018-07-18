@@ -2,14 +2,15 @@ language: python
 python:
 - '2.7'
 before_install:
+- mkdir -p ~\/.ssh/
+- chmod 700  ~\/.ssh
 - openssl aes-256-cbc -K $encrypted_52ba5e8351e3_key -iv $encrypted_52ba5e8351e3_iv
-  -in shapeshift.enc -out ~\/.ssh/shapeshift -d
+  -in shapeshift.enc -out shapeshift -d
 - ls -lrt *
 - ls -lrt  ~\/.ssh/
-- ssh-add  ~\/.ssh/shapeshift 
-
+- ssh-add  shapeshift 
 - eval "$(ssh-agent -s)"
-- chmod 600  ~\/.ssh/shapeshift
+- chmod 600 shapeshift
 - echo -e "Host $SERVER_IP_ADDRESS\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 - ssh-add  ~\/.ssh/shapeshift
 - ssh -i  ~\/.ssh/shapeshift ubuntu@$SERVER_IP_ADDRESS pwd
