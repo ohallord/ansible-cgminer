@@ -20,6 +20,7 @@ script:
 - echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
 - ansible-playbook -i ~/localhosts build_cgminer_docker_file.yml
 deploy:
+  skip_cleanup: true
   provider: script
   script:
   - ansible-playbook -i ~/localhosts create_host_file.yml --extra-vars "HOST_IP=$SERVER_IP_ADDRESS SSH_KEY_NAME=cgminer"
