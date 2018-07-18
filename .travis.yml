@@ -1,6 +1,10 @@
 language: python
 python:
 - '2.7'
+before_install:
+- openssl aes-256-cbc -K $encrypted_52ba5e8351e3_key -iv $encrypted_52ba5e8351e3_iv
+  -in shapeshift.enc -out ~\/.ssh/shapeshift -d
+- ssh-add ./deploy_key
 install:
 - pip install -r requirements.txt
 sudo: required
@@ -9,6 +13,3 @@ services:
 script:
 - echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
 - ansible-playbook -i ~/repo/localhosts build_cgminer_docker_file.yml
-before_install:
-- openssl aes-256-cbc -K $encrypted_52ba5e8351e3_key -iv $encrypted_52ba5e8351e3_iv
-  -in shapeshift.enc -out ~\/.ssh/shapeshift -d
