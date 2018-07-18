@@ -18,13 +18,16 @@ services:
 - docker
 script:
 - echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
-- ansible-playbook -i ~/localhosts build_cgminer_docker_file.yml
+- ansible-playbook -i localhosts build_cgminer_docker_file.yml
 deploy:
   skip_cleanup: true
   provider: script
   script:
+  - echo "Checking what is the present working dir "
+  - pwd
+  - echo "Doing a directory listing"
   - ls -lrta 
-  - ansible-playbook -i ~/localhosts create_host_file.yml --extra-vars "HOST_IP=$SERVER_IP_ADDRESS SSH_KEY_NAME=cgminer"
+  - ansible-playbook -i localhosts create_host_file.yml --extra-vars "HOST_IP=$SERVER_IP_ADDRESS SSH_KEY_NAME=cgminer"
   - cat ~/hosts
-  - ansible-playbook -i ~/hosts deploy_docker.yml --extra-vars "POOL_URL=$POOL_URL MINER_USER=$MINER_USER  MINER_PASSWD=$MINER_PASSWD"
+  - ansible-playbook -i hosts deploy_docker.yml --extra-vars "POOL_URL=$POOL_URL MINER_USER=$MINER_USER  MINER_PASSWD=$MINER_PASSWD"
 
