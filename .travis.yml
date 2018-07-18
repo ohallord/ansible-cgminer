@@ -9,7 +9,7 @@ before_install:
 - chmod 600 ~\/.ssh/cgminer
 - eval "$(ssh-agent -s)"
 - echo -e "Host $SERVER_IP_ADDRESS\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
-- ssh-add  .~\/.ssh/cgminer
+- ssh-add  ~\/.ssh/cgminer
 
 install:
 - pip install -r requirements.txt
