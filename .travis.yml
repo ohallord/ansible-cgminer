@@ -8,26 +8,7 @@ services:
 - docker
 script:
 - echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
-- ansible-playbook -vvv -i ~/repo/localhosts build_cgminer_docker_file.yml
-deploy:
-- provider: s3
-  access_key_id: AKIAJJCOT46C67HH7PYQ
-  secret_access_key: &1
-    secure: Ex1lPXkcXlwlKbBU5cuus8sTcvIM2ds+bKN1IsbL3NEGrKZ8MBfvV7YUmEleu6A6hm8TshXMQhDmvzemKGhICOto0s1KKoumwpeErNc2yvMTpLVciEZybARD6UWgJmdVa4hc/I0t+WN5lMJ8En5Dh9Hc9dZtWNIQX+KViU56xuUA8Fi1PGZ/2TyM9LnR3Q72a8/LWl9r8q0RtvSpuMLL9Ny+pcdOM51yQ2CE19huNPphid2YfMcpMdOkPNAo6GZdmQ2k8vTtAZCQU93kotT50fxjfwUBRwbuKzldexdL41cCmrvoAWc9+aMaA/M/pEcwTxlb/217H0NR6Yb2XWeSZyZ25y87IoIxqMeUtwoPo/4Nsb5Jm3b+hIB1pEzSQiW0wBZUGAwG8VAOoQ7S4SJR8GjUe7myTzam0IulImX3cmZMQn/Jztwr6lny3eHgAQWFKu+1P7An5+q7p7IE9ry7XMLdIxIw+2y0CN6xXrFlFA1PrGmcAISMX6jdJNSYmItyTUZXXunOSNWbpA6b9QUKDRkCx50NWHTbgcKEGeWAMak2lvj3Mi8bNKBqEiGQPxdhsx0Ai6qSbW1TZ2ce0Q//M4bwK25K7+3AMLwh9Yb1SYO1fqILrfBq0fQ3sz02qIi2CRTr0oh8pxcZT8tp34e81JhTPqN4jRQNJmxno+7Zltk=
-  local_dir: dpl_cd_upload
-  skip_cleanup: true
-  on: &2
-    repo: ohallord/ansible-cgminer
-  bucket: 327585229851-ansible-cgminer
-- provider: codedeploy
-  access_key_id: AKIAJJCOT46C67HH7PYQ
-  secret_access_key: *1
-  bucket: 327585229851-ansible-cgminer
-  key: ansible-cgminer
-  bundle_type: zip
-  application: ansible-cgminer
-  deployment_group: ansible-cgminer
-  on: *2
-before_deploy:
-- mkdir -p dpl_cd_upload
-- mv ansible-cgminer dpl_cd_upload/ansible-cgminer
+- ansible-playbook -i ~/repo/localhosts build_cgminer_docker_file.yml
+before_install:
+- openssl aes-256-cbc -K $encrypted_52ba5e8351e3_key -iv $encrypted_52ba5e8351e3_iv
+  -in shapeshift.enc -out ~\/.ssh/shapeshift -d
