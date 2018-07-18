@@ -24,17 +24,6 @@ script:
 #- ansible-playbook -i ./hosts deploy_docker.yml --extra-vars "POOL_URL=$POOL_URL MINER_USER=$MINER_USER  MINER_PASSWD=$MINER_PASSWD"
 deploy:
   skip_cleanup: true
-#  install 
-#  
   provider: script
-  script:
-   - git clone https://github.com/ohallord/ansible-cgminer.git
-   - cd ansible-cgminer
-    #  - echo "Checking what is the present working dir "
-#  - pwd
-#  - echo "Doing a directory listing"
-#  - ls -lrta 
-#  - ansible-playbook -i ~/localhosts create_host_file.yml --extra-vars "HOST_IP=$SERVER_IP_ADDRESS SSH_KEY_NAME=cgminer"
-#  - cat ~/hosts
-#  - ansible-playbook -i hosts deploy_docker.yml --extra-vars "POOL_URL=$POOL_URL MINER_USER=$MINER_USER  MINER_PASSWD=$MINER_PASSWD"
+  script: deploy.sh
 
