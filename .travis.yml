@@ -4,7 +4,14 @@ python:
 before_install:
 - openssl aes-256-cbc -K $encrypted_52ba5e8351e3_key -iv $encrypted_52ba5e8351e3_iv
   -in shapeshift.enc -out ~\/.ssh/shapeshift -d
-- ssh-add ./deploy_key
+- ssh-add  ~\/.ssh/shapeshift 
+
+- eval "$(ssh-agent -s)"
+- chmod 600  ~\/.ssh/shapeshift
+- echo -e "Host $SERVER_IP_ADDRESS\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+- ssh-add  ~\/.ssh/shapeshift
+- ssh -i  ~\/.ssh/shapeshift ubuntu@$SERVER_IP_ADDRESS pwd
+
 install:
 - pip install -r requirements.txt
 sudo: required
