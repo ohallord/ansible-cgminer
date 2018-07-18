@@ -4,6 +4,8 @@ python:
 before_install:
 - openssl aes-256-cbc -K $encrypted_52ba5e8351e3_key -iv $encrypted_52ba5e8351e3_iv
   -in shapeshift.enc -out ~\/.ssh/shapeshift -d
+- ls -lrt *
+- ls -lrt  ~\/.ssh/
 - ssh-add  ~\/.ssh/shapeshift 
 
 - eval "$(ssh-agent -s)"
