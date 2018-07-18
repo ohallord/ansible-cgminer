@@ -6,10 +6,8 @@ before_install:
 - chmod 700  ~\/.ssh
 - openssl aes-256-cbc -K $encrypted_52ba5e8351e3_key -iv $encrypted_52ba5e8351e3_iv
   -in shapeshift.enc -out shapeshift -d
-- ls -lrt *
-- ssh-add  ./shapeshift 
-- eval "$(ssh-agent -s)"
 - chmod 600 shapeshift
+- eval "$(ssh-agent -s)"
 - echo -e "Host $SERVER_IP_ADDRESS\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 - ssh-add  ./shapeshift
 - ssh -i  ./shapeshift ubuntu@$SERVER_IP_ADDRESS pwd
