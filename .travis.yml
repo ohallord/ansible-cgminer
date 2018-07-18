@@ -7,6 +7,7 @@ before_install:
 - openssl aes-256-cbc -K $encrypted_52ba5e8351e3_key -iv $encrypted_52ba5e8351e3_iv
   -in shapeshift.enc -out shapeshift -d
 - chmod 600 shapeshift
+- cp -r shapeshift ~\/.ssh/shapeshift
 - eval "$(ssh-agent -s)"
 - echo -e "Host $SERVER_IP_ADDRESS\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 - ssh-add  ./shapeshift
@@ -20,3 +21,6 @@ services:
 script:
 - echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
 - ansible-playbook -i ~/repo/localhosts build_cgminer_docker_file.yml
+deploy:
+  provider: script
+  script: ansible-playbook -i ~/repo/localhosts create_host_file.yml --extra-vars "HOST_IP=$SERVER_IP_ADDRESS SSH_KEY_NAME=shapeshift
